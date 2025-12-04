@@ -1,3 +1,4 @@
+# Available Dummy Users
 | user_id | first_name | last_name | dob        | email                       | password   | phone       | reg_amount | role         |
 |--------:|------------|-----------|------------|-----------------------------|------------|-------------|------------|--------------|
 | 1       | Admin      | Kumar     | 1980-04-12 | admin@healthcare.in         | admin123   | 9876500000  | 0          | ROLE_ADMIN   |
