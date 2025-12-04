@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="BookAppointmentServlet" method="post">
+      
+      <table style="background-color: #f5f2a9; margin: auto">
+        <tr>
+          <td>Doctor ID</td>
+          <td><input type="number" name="doc_id" required/></td>
+        </tr>        
+	 <tr>
+          <td>Appointment Date Time</td>
+	  <td><input type="datetime-local" name="appointmentDateTime" required></td>
+         </tr>
+        <tr>
+          <td><input type="submit" value="Book Appointment" /></td>
+        </tr>
+      </table>
+    </form>
+</body>
+</html>
