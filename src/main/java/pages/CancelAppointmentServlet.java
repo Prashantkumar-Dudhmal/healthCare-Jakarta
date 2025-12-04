@@ -6,19 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import dao.AppointmentDao;
 import dao.AppointmentDaoImpl;
 
-/**
- * Servlet implementation class CancelAppointmentServlet
- */
 @WebServlet("/CancelAppointmentServlet")
 public class CancelAppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +25,7 @@ public class CancelAppointmentServlet extends HttpServlet {
 			e.printStackTrace();
 			throw new ServletException("Error in Cancel Init",e);
 		}
+		System.out.println("Cancel Appointment Servlet Init Done!!");
 	}
 
 	public void destroy() {
@@ -39,10 +34,10 @@ public class CancelAppointmentServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Cancel Appointment Servlet Destroy Done!!");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession ss = request.getSession();
 		long apptmtId = Long.parseLong(request.getParameter("appId"));
 		LocalDate d1 = LocalDate.parse(request.getParameter("date"));
 		LocalDate d2 = LocalDate.now();
@@ -61,11 +56,7 @@ public class CancelAppointmentServlet extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}}
+		}
+		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }

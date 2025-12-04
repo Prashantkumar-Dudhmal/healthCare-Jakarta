@@ -16,9 +16,6 @@ import dao.UserDao;
 import dao.UserDaoImpl;
 import entities.User;
 
-/**
- * Servlet implementation class AuthServlet
- */
 @WebServlet(value="/login",loadOnStartup = 1)
 public class AuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +26,6 @@ public class AuthServlet extends HttpServlet {
 		try {
 			udao = new UserDaoImpl();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new ServletException("Error in Init of AuthServlet",e);
 		}
@@ -40,15 +36,11 @@ public class AuthServlet extends HttpServlet {
 		try {
 			udao.cleanUp();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Auth Servlet Destroy Done!!");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setContentType("text/html");

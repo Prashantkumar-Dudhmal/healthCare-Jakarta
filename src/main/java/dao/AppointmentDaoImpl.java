@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class AppointmentDaoImpl implements AppointmentDao{
 		ps1 = cn.prepareStatement("select a.appointment_id,a.appointment_date_time,u.first_name,u.last_name from appointments a join doctors d on a.doctor_id=d.doctor_id join users u on d.user_id=u.user_id where a.patient_id =? and a.status='SCHEDULED' and a.appointment_date_time > now()");
 		ps2 = cn.prepareStatement("insert into appointments (appointment_date_time,doctor_id,patient_id,status) values(?,?,?,'SCHEDULED')");
 		ps3 = cn.prepareStatement("update appointments set status='CANCELLED' where appointment_id=?;");
-		ps4 = cn.prepareStatement("select appointment_date_time from appointments where doctor_id=? and appointment_date_time between ? and ?");
+		ps4 = cn.prepareStatement("SELECT appointment_date_time FROM appointments WHERE doctor_id = ? AND patient_id= ? AND appointment_date_time BETWEEN ? AND DATE_ADD(?, INTERVAL 1 HOUR);");
+		System.out.println("AppointmentDao Created!!");
 	}
 
 	@Override
@@ -37,6 +37,19 @@ public class AppointmentDaoImpl implements AppointmentDao{
 			ps1.close();
 			ps1=null;
 		}
+		if(ps2!=null) {
+			ps2.close();
+			ps2=null;
+		}
+		if(ps3!=null) {
+			ps3.close();
+			ps3=null;
+		}
+		if(ps4!=null) {
+			ps4.close();
+			ps4=null;
+		}
+		System.out.println("Appointment Dao Impl CleanUp Done!!");
 	}
 
 	@Override
@@ -52,36 +65,28 @@ public class AppointmentDaoImpl implements AppointmentDao{
 	}
 
 	@Override
-	public boolean bookAppointment(Appointment a) throws SQLException {
-		
-//		ps4.setLong(1, a.getAppointmentId());
-		Timestamp adtPlusHalf = a.getAppointmentDateTime();
-		int hr = (a.getAppointmentDateTime().getHours()+1)%24;
-		adtPlusHalf.setHours(hr);
+	public String bookAppointment(Appointment a) throws SQLException {
 		ps4.setLong(1, a.getDoctorId());
-		ps4.setTimestamp(2, a.getAppointmentDateTime());
-		ps4.setTimestamp(3, adtPlusHalf);
+		ps4.setLong(2, a.getPatientId());
+		ps4.setTimestamp(3, a.getAppointmentDateTime());
+		ps4.setTimestamp(4, a.getAppointmentDateTime());
 		try(ResultSet rs = ps4.executeQuery()){
 			if(rs.next()) {
 				System.out.println("Appointment already present!!");
-				return false;
+				return "Either Doctor is Unavailable or You already have an Appointment!!";
 			}
 			else {
 				System.out.println("No appointment At that time , Good to Go!!");
 			}
 		}
-//		if(a.getAppointmentDateTime().equals(adt)) {
-//			return false;
-//		}
-//		else if(a.getAppointmentDateTime().before())
 		ps2.setTimestamp(1, a.getAppointmentDateTime());
 		ps2.setLong(2, a.getDoctorId());
 		ps2.setLong(3, a.getPatientId());
 		int res = ps2.executeUpdate();
 		if(res==1)
-		return true;
+		return "Booking Done !!";
 		else
-			return false;
+			return "Booking Error :(";
 	}
 
 	@Override

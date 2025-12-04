@@ -15,6 +15,7 @@ public class PatientDaoImpl implements PatientDao{
 	public PatientDaoImpl() throws SQLException {
 		cn = DBUtils.getConnection();
 		ps1 = cn.prepareStatement("select * from patients where user_id=?");
+		System.out.println("PatientDao Created!!");
 	}
 	
 	@Override
@@ -27,6 +28,7 @@ public class PatientDaoImpl implements PatientDao{
 			ps1.close();
 			ps1=null;
 		}
+		System.out.println("Patient Dao Impl CleanUp Done!!");
 	}
 
 	@Override

@@ -20,6 +20,7 @@ public class dDashboardServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		System.out.println("Doctor DashBoard Servlet Init Done!!");
 	}
 
 	/**
@@ -27,6 +28,7 @@ public class dDashboardServlet extends HttpServlet {
 	 */
 	public void destroy() {
 		// TODO Auto-generated method stub
+		System.out.println("Doctor DashBoard Servlet Destroy Done!!");
 	}
 
 	/**

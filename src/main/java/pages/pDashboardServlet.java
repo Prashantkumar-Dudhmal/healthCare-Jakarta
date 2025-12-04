@@ -22,7 +22,7 @@ import dto.AppointmentDTO;
 import entities.Patient;
 import entities.User;
 
-@WebServlet(value="/pDashboardServlet",loadOnStartup = 2)
+@WebServlet(value="/pDashboardServlet")
 public class pDashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PatientDao pdao;
@@ -57,7 +57,7 @@ public class pDashboardServlet extends HttpServlet {
 			
 			HttpSession ss = request.getSession();
 			if(ss.isNew()) {
-				pw.print("Allow Cookies then LogIn Again plz <br><a href='index.html'>Back</a>");
+				pw.print("Cookies Mismatch, LogIn Again plz <br><a href='index.html'>Back</a>");
 				pw.flush();
 			}
 			else {
@@ -81,8 +81,8 @@ public class pDashboardServlet extends HttpServlet {
 					LocalDate d = adto.getAppointmentDateTime().toLocalDateTime().toLocalDate();
 					pw.printf("<tr><td>  %d  </td><td>  %s  </td><td>  %s %s  </td> <td> <button><a href='CancelAppointmentServlet?appId=%d&date=%s'>Cancel</a></button></td></tr>",adto.getAppointmentId(),adto.getAppointmentDateTime(),adto.getFirstName(),adto.getLastName(),adto.getAppointmentId(),d);
 				}
-				pw.print("</table>");
-				pw.print("<a href='BookAppointment.html'>Book Appointment</a>   <a>LogOut</a>");
+				pw.print("</table><br><br>");
+				pw.print("<button><a href='BookAppointment.html'>Book Appointment</a></button>   <button><a href='logout'>LogOut</a></button>");
 				
 				
 			}

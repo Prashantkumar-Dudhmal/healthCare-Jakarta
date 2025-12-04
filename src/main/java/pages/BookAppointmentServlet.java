@@ -19,7 +19,7 @@ import dao.AppointmentDaoImpl;
 import entities.Appointment;
 import entities.Patient;
 
-@WebServlet(value = "/BookAppointmentServlet",loadOnStartup = 3)
+@WebServlet(value = "/BookAppointmentServlet")
 public class BookAppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentDao appDao;
@@ -31,6 +31,7 @@ public class BookAppointmentServlet extends HttpServlet {
 			e.printStackTrace();
 			throw new ServletException("Error in Book Init",e);
 		}
+		System.out.println("BookAppointment Servlet Init Done!!");
 	}
 
 	public void destroy() {
@@ -39,6 +40,7 @@ public class BookAppointmentServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("book Appointment Servlet Destroy Done!!");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,14 +57,12 @@ public class BookAppointmentServlet extends HttpServlet {
 				Timestamp ts = Timestamp.valueOf(ldt);
 				
 				Patient p = (Patient) ss.getAttribute("patient_details");
+				System.out.println("Patient Id : "+ p.getPatientID());
 				Appointment a = new Appointment(ts,doctorId, p.getPatientID());
 				
-				boolean res = appDao.bookAppointment(a);
-				if(res) {
-					response.sendRedirect("pDashboardServlet?msg=Booking SuccessFull!!");
-				}
-				else
-					response.sendRedirect("pDashboardServlet?msg=Booking Failed!!");
+				String res = appDao.bookAppointment(a);
+				response.sendRedirect("pDashboardServlet?msg="+res);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

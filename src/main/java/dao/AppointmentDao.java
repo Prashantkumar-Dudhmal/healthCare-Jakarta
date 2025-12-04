@@ -8,6 +8,6 @@ import entities.Appointment;
 
 public interface AppointmentDao extends BaseDao{
 	List<AppointmentDTO> getAppointments(long patientId) throws SQLException;
-	boolean bookAppointment(Appointment a) throws SQLException;
+	String bookAppointment(Appointment a) throws SQLException;
 	int cancelAppointment(long aId) throws SQLException;
 }
