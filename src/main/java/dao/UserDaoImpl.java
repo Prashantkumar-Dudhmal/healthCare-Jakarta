@@ -15,6 +15,7 @@ public class UserDaoImpl implements UserDao {
 	public UserDaoImpl() throws SQLException {
 		cn = DBUtils.getConnection();
 		ps1 = cn.prepareStatement("select * from users where email = ? and password=?");
+		System.out.println("UserDao Created!!");
 	}
 
 	@Override
