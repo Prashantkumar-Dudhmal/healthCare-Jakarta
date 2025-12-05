@@ -12,8 +12,8 @@ public class PatientDaoImpl implements PatientDao{
 	private Connection cn;
 	private PreparedStatement ps1;
 	
-	public PatientDaoImpl() throws SQLException {
-		cn = DBUtils.getConnection();
+	public PatientDaoImpl(String url,String usr,String pass) throws SQLException {
+		cn = DBUtils.getConnection(url,usr,pass);
 		ps1 = cn.prepareStatement("select * from patients where user_id=?");
 		System.out.println("PatientDao Created!!");
 	}

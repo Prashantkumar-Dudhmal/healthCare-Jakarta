@@ -1,6 +1,7 @@
 package pages;
 
-import jakarta.servlet.ServletConfig;
+
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,10 +22,18 @@ public class AuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserDao udao;
 	
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		
 		try {
-			udao = new UserDaoImpl();
+			ServletContext ctx = getServletContext();
+			System.out.println(ctx);
+			String url = ctx.getInitParameter("DBURL");
+			String user = ctx.getInitParameter("DBuser");
+			String pass = ctx.getInitParameter("DBPass");
+			System.out.println("url: "+url);
+			System.out.println("usr: "+user);
+			System.out.println("pass: "+pass);
+			udao = new UserDaoImpl(url,user,pass);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ServletException("Error in Init of AuthServlet",e);
@@ -53,7 +62,6 @@ public class AuthServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("user_details", currentUser);
 				if(currentUser.getRole().equals("ROLE_PATIENT")) {
-//					pw.print("Patient");
 					response.sendRedirect("pDashboardServlet");
 				}
 				else if(currentUser.getRole().equals("ROLE_DOCTOR")) {

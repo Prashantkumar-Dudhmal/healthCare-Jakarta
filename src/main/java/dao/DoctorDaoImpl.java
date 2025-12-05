@@ -11,8 +11,8 @@ import utils.DBUtils;
 public class DoctorDaoImpl implements DoctorDao{
 	private Connection cn;
 	private PreparedStatement ps1;
-	public DoctorDaoImpl() throws SQLException {
-		cn = DBUtils.getConnection();
+	public DoctorDaoImpl(String url,String usr,String pass) throws SQLException {
+		cn = DBUtils.getConnection(url,usr,pass);
 		ps1 = cn.prepareStatement("select * from doctors where user_id=?");
 		System.out.println("Doctor Dao Created!!");
 	}

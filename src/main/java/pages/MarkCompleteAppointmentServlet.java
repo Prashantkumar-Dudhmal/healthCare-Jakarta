@@ -1,6 +1,7 @@
 package pages;
 
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +20,11 @@ public class MarkCompleteAppointmentServlet extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		try {
-			appDao = new AppointmentDaoImpl();
+			ServletContext ctx = getServletContext();
+			String url = ctx.getInitParameter("DBURL");
+			String user = ctx.getInitParameter("DBuser");
+			String pass = ctx.getInitParameter("DBPass");
+			appDao = new AppointmentDaoImpl(url,user,pass);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ServletException("Error in MarkComplete Init !",e);

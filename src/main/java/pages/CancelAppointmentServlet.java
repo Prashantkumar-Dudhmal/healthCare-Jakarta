@@ -1,6 +1,6 @@
 package pages;
 
-import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,9 +18,13 @@ public class CancelAppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppointmentDao appDao;
 	
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		try {
-			appDao = new AppointmentDaoImpl();
+			ServletContext ctx = getServletContext();
+			String url = ctx.getInitParameter("DBURL");
+			String user = ctx.getInitParameter("DBuser");
+			String pass = ctx.getInitParameter("DBPass");
+			appDao = new AppointmentDaoImpl(url,user,pass);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ServletException("Error in Cancel Init",e);

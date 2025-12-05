@@ -1,6 +1,5 @@
 package pages;
 
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +11,7 @@ import java.io.IOException;
 public class aDashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		System.out.println("Admin DashBoard Servlet Init Done!!");
 	}
 

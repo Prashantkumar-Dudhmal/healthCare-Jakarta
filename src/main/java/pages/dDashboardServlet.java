@@ -1,6 +1,6 @@
 package pages;
 
-import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,10 +28,14 @@ public class dDashboardServlet extends HttpServlet {
 	private AppointmentDao appDao;
 	private DoctorDao dDao;
 	
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		try {
-			dDao = new DoctorDaoImpl();
-			appDao = new AppointmentDaoImpl();
+			ServletContext ctx = getServletContext();
+			String url = ctx.getInitParameter("DBURL");
+			String user = ctx.getInitParameter("DBuser");
+			String pass = ctx.getInitParameter("DBPass");
+			dDao = new DoctorDaoImpl(url,user,pass);
+			appDao = new AppointmentDaoImpl(url,user,pass);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ServletException("Error in Init of dDashboardServlet",e);
