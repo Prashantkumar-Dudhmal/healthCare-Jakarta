@@ -1,3 +1,5 @@
+>Run this sql file : final healthcare-day
+
 # Available Dummy Users
 | user_id | first_name | last_name | dob        | email                       | password   | phone       | reg_amount | role         |
 |--------:|------------|-----------|------------|-----------------------------|------------|-------------|------------|--------------|
